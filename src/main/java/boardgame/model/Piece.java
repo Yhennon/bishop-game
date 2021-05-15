@@ -23,6 +23,7 @@ public class Piece {
 
     public ObjectProperty<Position> positionProperty(){return position;}
 
+    @Override
     public String toString(){return type.toString() + position.get().toString();}
 
     public static void main(String[] args) {
