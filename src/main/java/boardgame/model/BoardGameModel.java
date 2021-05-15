@@ -3,9 +3,7 @@ package boardgame.model;
 
 import javafx.beans.property.ObjectProperty;
 
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class BoardGameModel {
 
@@ -93,9 +91,61 @@ public class BoardGameModel {
     public Set<BishopDirection> getValidMoves(int pieceNumber) {
         //kinullázzuk a validMoves halmazt
         EnumSet<BishopDirection> validMoves = EnumSet.noneOf(BishopDirection.class);
-        //todo
+        // Feltöltjük a validMoves halmazt a megadott piecenumber minden szabályos lépésével.
+        // Ezt letesztellni mainben,a blokklás részt!
+        for (var direction : BishopDirection.values()) {
+            if (isValidMove(pieceNumber, direction)) {
+                validMoves.add(direction);
+            }
+        }
         return null;
     }
 
+    // Adott Piece-t a piecesből elmozdítani.(Positionjét)
+    public void move(int pieceNumber, BishopDirection direction) {
+        pieces[pieceNumber].moveTo(direction);
+    }
+
+
+    // Az összes piece pozicioját visszaadja egy listában. a lista elemei az elemek pozicioja(n x m)
+    // a Controller selectablePositions listájának a feltöltésénél lesz hasznos, a modelben létrehozott 8 bábu poziciojanak listazasahoz
+    public List<Position> getPiecePositions() {
+        List<Position> positions = new ArrayList<>(pieces.length);
+        for (var piece : pieces) {
+            positions.add(piece.getPosition());
+        }
+        return positions;
+    }
+
+
+    // Position alapján megmondja,melyik Piece-ről van szó.
+
+    //A selectablePositions feltöltésénél lesz hasznos, amikor a kiválaszott elemről a positionje alapján kell megmondani,hogy melyik pieceről van szó.(pontosan, hogy a pieces lista hanyadik indexe)
+    // Emellett, a Controllerben a handleClickOnSquare-nél lesz még hasznos, paraméternek a selected változót fogja kapni,
+    // ami a SELECT_FROM fázisban kiválasztott  piece lesz.(board->boardon egy square-> squaren a piece)
+    // Az OptionalInt típus nagyon szép dolog,mert ha null referenciat adunk at, akkor nem exception lesz hanem empty Optionalt adunk át
+    public OptionalInt getPieceNumber(Position position){
+      for (int i = 0; i < pieces.length; i++) {
+          if (pieces[i].getPosition().equals(position)){
+              return OptionalInt.of(i);
+          }
+      }
+      return OptionalInt.empty();
+    }
+
+    // a Model kiprinteléséhez
+    // a piece toString() metodusa a piecet pedig PIECETYPE[(POZITIONSOR,POZITIONOSZLOP)] formaban adja vissza.
+    public String toString(){
+        StringJoiner joiner = new StringJoiner(",","[","]");
+        for (var piece : pieces){
+            joiner.add(piece.toString());
+        }
+        return joiner.toString();
+    }
+
+    public static void main(String[] args) {
+        BoardGameModel model = new BoardGameModel();
+        System.out.println(model);
+    }
 
 }
