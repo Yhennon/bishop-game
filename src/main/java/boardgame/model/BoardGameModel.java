@@ -11,7 +11,7 @@ public class BoardGameModel {
 
     public static int BOARD_COLUMN_SIZE = 4;
 
-    private Piece[] pieces;
+    private final Piece[] pieces;
 
     // Kezdeti Board state
     public BoardGameModel() {
@@ -19,10 +19,10 @@ public class BoardGameModel {
                 new Piece(PieceType.BLACK, new Position(0, 1)),
                 new Piece(PieceType.BLACK, new Position(0, 2)),
                 new Piece(PieceType.BLACK, new Position(0, 3)),
-                new Piece(PieceType.WHITE, new Position(4, 0)),
-                new Piece(PieceType.WHITE, new Position(4, 1)),
-                new Piece(PieceType.WHITE, new Position(4, 2)),
-                new Piece(PieceType.WHITE, new Position(4, 3)));
+                new Piece(PieceType.BLUE, new Position(4, 0)),
+                new Piece(PieceType.BLUE, new Position(4, 1)),
+                new Piece(PieceType.BLUE, new Position(4, 2)),
+                new Piece(PieceType.BLUE, new Position(4, 3)));
     }
 
     // Szükséges a paraméter nélküli konstruktorhoz.
@@ -98,7 +98,7 @@ public class BoardGameModel {
                 validMoves.add(direction);
             }
         }
-        return null;
+        return validMoves;
     }
 
     // Adott Piece-t a piecesből elmozdítani.(Positionjét)
@@ -135,6 +135,7 @@ public class BoardGameModel {
 
     // a Model kiprinteléséhez
     // a piece toString() metodusa a piecet pedig PIECETYPE[(POZITIONSOR,POZITIONOSZLOP)] formaban adja vissza.
+    @Override
     public String toString(){
         StringJoiner joiner = new StringJoiner(",","[","]");
         for (var piece : pieces){
