@@ -146,6 +146,8 @@ public class BoardGameModel {
     public static void main(String[] args) {
         BoardGameModel model = new BoardGameModel();
         System.out.println(model);
+        model.move(0,BishopDirection.DOWN2_RIGHT2);
+        System.out.println(model);
     }
 
 }
