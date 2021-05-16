@@ -18,8 +18,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 
 import javafx.stage.Stage;
+import org.json.simple.JSONObject;
 import org.tinylog.Logger;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,17 +108,35 @@ public class BishopGameController {
 
                     model.incrementMoveCount();
                     System.out.println(model.getMoveCount());
-//                    if (model.isGoalStateReached()){
-//                        System.out.println("GoalState reached.");
-                        // TODO
-                        // make the game exit /  lets go to statistics screen.
 
+                    if (model.isGoalStateReached()){
+                        model.incrementGamesWon();
+                        System.out.println("GoalState reached.");
+                        System.out.println("Games won #times:");
+                        System.out.println(model.getGamesWon());
+//                        writeJSON(model.getGamesWon(), model.getMoveCount());
 
-                    //}
+                    }
                 }
             }
         }
     }
+
+    //paramba
+//    private void writeJSON(int gamesWon,int moveCount){
+//        JSONObject statistics = new JSONObject();
+//        statistics.put("#Number", gamesWon);
+//        statistics.put("#OfMoves",moveCount);
+//
+//        try (FileWriter file = new FileWriter("statistics.json")) {
+//            file.append(statistics.toJSONString());
+////            file.flush();
+//            System.out.println(statistics.toString());
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     // Beállítjuk a selected változót egy positionre, majd meghívjuk a showSelectedPosition metodust, h lá
     private void selectPosition(Position position) {

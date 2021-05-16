@@ -15,6 +15,8 @@ public class BoardGameModel {
 
     public int moveCount = 0;
 
+    public int gamesWon = 0;
+
     //innen
 
     private enum Player{
@@ -191,6 +193,14 @@ public class BoardGameModel {
     // Adds one to the moveCount
     public void incrementMoveCount(){
         moveCount++;
+    }
+
+    public int getGamesWon(){
+        return gamesWon;
+    }
+
+    public void incrementGamesWon(){
+        gamesWon++;
     }
 
     // a Model kiprinteléséhez
