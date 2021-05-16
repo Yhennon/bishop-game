@@ -5,16 +5,22 @@ import boardgame.model.BoardGameModel;
 import boardgame.model.Position;
 
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
 import javafx.scene.paint.Color;
 
+import javafx.stage.Stage;
 import org.tinylog.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +107,7 @@ public class BishopGameController {
                         System.out.println("GoalState reached.");
                         // TODO
                         // make the game exit /  lets go to statistics screen.
+
 
                     }
                 }
@@ -223,5 +230,13 @@ public class BishopGameController {
         StackPane newSquare = getSquare(newPosition);
         newSquare.getChildren().addAll(oldSquare.getChildren());
         oldSquare.getChildren().clear();
+    }
+
+    @FXML
+    private void showStatisticsScene(ActionEvent event) throws IOException{
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/statistics.fxml"));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
