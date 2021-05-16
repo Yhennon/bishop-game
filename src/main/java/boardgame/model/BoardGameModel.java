@@ -13,6 +13,23 @@ public class BoardGameModel {
 
     private final Piece[] pieces;
 
+    //innen
+
+    private enum Player{
+        PLAYER1,
+        PLAYER2;
+
+        public Player alter(){
+            return switch (this){
+                case PLAYER1 -> PLAYER2;
+                case PLAYER2 -> PLAYER1;
+            };
+        }
+    }
+
+    private Player nextPlayer;
+    private boolean goalState;
+
     // Kezdeti Board state
     public BoardGameModel() {
         this(new Piece(PieceType.BLACK, new Position(0, 0)),
@@ -23,6 +40,8 @@ public class BoardGameModel {
                 new Piece(PieceType.BLUE, new Position(4, 1)),
                 new Piece(PieceType.BLUE, new Position(4, 2)),
                 new Piece(PieceType.BLUE, new Position(4, 3)));
+        this.nextPlayer = Player.PLAYER1;
+        this.goalState = false;
     }
 
     // Szükséges a paraméter nélküli konstruktorhoz.
@@ -104,6 +123,35 @@ public class BoardGameModel {
     // Adott Piece-t a piecesből elmozdítani.(Positionjét)
     public void move(int pieceNumber, BishopDirection direction) {
         pieces[pieceNumber].moveTo(direction);
+        // Ha a goalstate true,akk controllerben kezeljük le
+        goalState = checkWinCondition();
+        nextPlayer = nextPlayer.alter();
+    }
+
+    //A player goalState-ét adja vissza. nem lenne szükséges,de mindenhol ilyen keözvetítőket használunk,ugyhgyo tartsuk magunkat hozzá
+    // csak mert nem akarok végtelen nagy metódusláncolásokat
+    public boolean isGoalStateReached() {
+        return goalState;
+    }
+
+    //győzelmi feltétel
+    // H az összes fekete az utolso rowban van, és az összes fehér az elsőben,akkor win
+    public boolean checkWinCondition() {
+        for (var piece : pieces) {
+            switch (piece.getType()) {
+                case BLACK -> {
+                    if (piece.getPosition().row() != BOARD_ROW_SIZE - 1) {
+                        return false;
+                    }
+                }
+                case BLUE -> {
+                    if (piece.getPosition().row() != 0) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 
@@ -124,21 +172,21 @@ public class BoardGameModel {
     // Emellett, a Controllerben a handleClickOnSquare-nél lesz még hasznos, paraméternek a selected változót fogja kapni,
     // ami a SELECT_FROM fázisban kiválasztott  piece lesz.(board->boardon egy square-> squaren a piece)
     // Az OptionalInt típus nagyon szép dolog,mert ha null referenciat adunk at, akkor nem exception lesz hanem empty Optionalt adunk át
-    public OptionalInt getPieceNumber(Position position){
-      for (int i = 0; i < pieces.length; i++) {
-          if (pieces[i].getPosition().equals(position)){
-              return OptionalInt.of(i);
-          }
-      }
-      return OptionalInt.empty();
+    public OptionalInt getPieceNumber(Position position) {
+        for (int i = 0; i < pieces.length; i++) {
+            if (pieces[i].getPosition().equals(position)) {
+                return OptionalInt.of(i);
+            }
+        }
+        return OptionalInt.empty();
     }
 
     // a Model kiprinteléséhez
     // a piece toString() metodusa a piecet pedig PIECETYPE[(POZITIONSOR,POZITIONOSZLOP)] formaban adja vissza.
     @Override
-    public String toString(){
-        StringJoiner joiner = new StringJoiner(",","[","]");
-        for (var piece : pieces){
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(",", "[", "]");
+        for (var piece : pieces) {
             joiner.add(piece.toString());
         }
         return joiner.toString();
@@ -147,7 +195,7 @@ public class BoardGameModel {
     public static void main(String[] args) {
         BoardGameModel model = new BoardGameModel();
         System.out.println(model);
-        model.move(0,BishopDirection.DOWN2_RIGHT2);
+        model.move(0, BishopDirection.DOWN2_RIGHT2);
         System.out.println(model);
     }
 
