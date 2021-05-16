@@ -1,5 +1,6 @@
 package boardgame;
 
+import boardgame.jdbi.StatisticsController;
 import boardgame.model.BishopDirection;
 import boardgame.model.BoardGameModel;
 import boardgame.model.Position;
@@ -18,7 +19,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 
 import javafx.stage.Stage;
-import org.json.simple.JSONObject;
 import org.tinylog.Logger;
 
 import java.io.FileWriter;
@@ -115,6 +115,8 @@ public class BishopGameController {
                         System.out.println("Games won #times:");
                         System.out.println(model.getGamesWon());
 //                        writeJSON(model.getGamesWon(), model.getMoveCount());
+                        StatisticsController statisticsController = new StatisticsController();
+                        statisticsController.insertNGame(statisticsController.getAllGameCount()+1,model.getMoveCount());
 
                     }
                 }
@@ -261,5 +263,14 @@ public class BishopGameController {
         Parent root = FXMLLoader.load(getClass().getResource("/statistics.fxml"));
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    @FXML
+    private void resetGame(ActionEvent event){
+        Logger.info("Resetting the game board...");
+        selectionPhase = SelectionPhase.SELECT_FROM;
+        board.getChildren().clear();
+        model = new BoardGameModel();
+        initialize();
     }
 }
