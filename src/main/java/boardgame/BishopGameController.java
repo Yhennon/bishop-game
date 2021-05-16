@@ -97,6 +97,12 @@ public class BishopGameController {
                     model.move(pieceNumber, direction);
                     deselectSelectedPosition();
                     alterSelectionPhase();
+                    if (model.isGoalStateReached()){
+                        System.out.println("GoalState reached.");
+                        // TODO
+                        // make the game exit /  lets go to statistics screen.
+
+                    }
                 }
             }
         }
