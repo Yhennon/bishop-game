@@ -13,6 +13,8 @@ public class BoardGameModel {
 
     private final Piece[] pieces;
 
+    public int moveCount = 0;
+
     //innen
 
     private enum Player{
@@ -181,6 +183,16 @@ public class BoardGameModel {
         return OptionalInt.empty();
     }
 
+    // Returns the moveCount
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    // Adds one to the moveCount
+    public void incrementMoveCount(){
+        moveCount++;
+    }
+
     // a Model kiprinteléséhez
     // a piece toString() metodusa a piecet pedig PIECETYPE[(POZITIONSOR,POZITIONOSZLOP)] formaban adja vissza.
     @Override
@@ -194,9 +206,12 @@ public class BoardGameModel {
 
     public static void main(String[] args) {
         BoardGameModel model = new BoardGameModel();
+        model.incrementMoveCount();
         System.out.println(model);
         model.move(0, BishopDirection.DOWN2_RIGHT2);
         System.out.println(model);
+        model.incrementMoveCount();
+        System.out.println(model.getMoveCount());
     }
 
 }
