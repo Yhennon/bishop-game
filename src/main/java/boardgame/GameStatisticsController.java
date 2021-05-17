@@ -1,8 +1,11 @@
 package boardgame;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.tinylog.Logger;
 
 public class GameStatisticsController {
 
@@ -20,5 +23,11 @@ public class GameStatisticsController {
             statisticsTextFlow.getChildren().add(new Text((i + 1) + " . #Játék : " + ngames[i] + " Lépések száma : " + nmoves[i] + "\n"));
 
         }
+    }
+
+    @FXML
+    private void exitGame(ActionEvent event) {
+        Logger.info("Exitting game...");
+        Platform.exit();
     }
 }

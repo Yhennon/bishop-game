@@ -5,6 +5,7 @@ import boardgame.model.BishopDirection;
 import boardgame.model.BoardGameModel;
 import boardgame.model.Position;
 
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
