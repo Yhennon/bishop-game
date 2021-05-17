@@ -70,8 +70,8 @@ public class BoardGameModel {
     }
 
     /**
-     *
-     * @param pieces
+     * Checks the pieces.
+     * @param pieces the given pieces list.
      */
     private void checkPieces(Piece[] pieces) {
         var seen = new HashSet<Position>();
