@@ -1,5 +1,8 @@
 package boardgame.model;
 
+/**
+ * An enum class that represents the possible directions.
+ */
 public enum BishopDirection implements Direction {
 
     UP_LEFT(-1, -1),
@@ -20,21 +23,37 @@ public enum BishopDirection implements Direction {
     private int rowChange;
     private int colChange;
 
+    /**
+     * Constructor of the BishopDirection enum class.
+     * @param rowChange set the rowChange to this value.
+     * @param colChange set the colChange to this value.
+     */
     private BishopDirection(int rowChange, int colChange) {
         this.rowChange = rowChange;
         this.colChange = colChange;
     }
 
+    /**
+     * @return The rowChange value.
+     */
     @Override
     public int getRowChange() {
         return rowChange;
     }
 
+    /**
+     * @return The colChange value.
+     */
     @Override
     public int getColChange() {
         return colChange;
     }
 
+    /**
+     * @param rowChange the give change in rows.
+     * @param colChange the give change in columns.
+     * @return Which direction has has the same rowChange and colChange as the parameters.
+     */
     public static BishopDirection of(int rowChange, int colChange) {
         for (var direction : values()) {
             if (direction.rowChange == rowChange && direction.colChange == colChange) {
