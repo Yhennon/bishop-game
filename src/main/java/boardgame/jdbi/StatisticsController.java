@@ -45,8 +45,10 @@ public class StatisticsController {
     }
 
     public void deleteStatistics() {
-        jdbi.withExtension(PlayerStatsDao.class,dao ->{dao.deleteStatistics(); return true;});
+        jdbi.withExtension(PlayerStatsDao.class, dao -> {
+            dao.deleteStatistics();
+            return true;
+        });
     }
-
 
 }
