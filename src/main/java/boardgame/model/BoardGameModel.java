@@ -40,10 +40,10 @@ public class BoardGameModel {
                 new Piece(PieceType.BLACK, new Position(0, 1)),
                 new Piece(PieceType.BLACK, new Position(0, 2)),
                 new Piece(PieceType.BLACK, new Position(0, 3)),
-                new Piece(PieceType.BLUE, new Position(4, 0)),
-                new Piece(PieceType.BLUE, new Position(4, 1)),
-                new Piece(PieceType.BLUE, new Position(4, 2)),
-                new Piece(PieceType.BLUE, new Position(4, 3)));
+                new Piece(PieceType.WHITE, new Position(4, 0)),
+                new Piece(PieceType.WHITE, new Position(4, 1)),
+                new Piece(PieceType.WHITE, new Position(4, 2)),
+                new Piece(PieceType.WHITE, new Position(4, 3)));
         this.nextPlayer = Player.PLAYER1;
         this.goalState = false;
     }
@@ -148,7 +148,7 @@ public class BoardGameModel {
                         return false;
                     }
                 }
-                case BLUE -> {
+                case WHITE -> {
                     if (piece.getPosition().row() != 0) {
                         return false;
                     }
@@ -214,14 +214,14 @@ public class BoardGameModel {
         return joiner.toString();
     }
 
-    public static void main(String[] args) {
-        BoardGameModel model = new BoardGameModel();
-        model.incrementMoveCount();
-        System.out.println(model);
-        model.move(0, BishopDirection.DOWN2_RIGHT2);
-        System.out.println(model);
-        model.incrementMoveCount();
-        System.out.println(model.getMoveCount());
-    }
+//    public static void main(String[] args) {
+//        BoardGameModel model = new BoardGameModel();
+//        model.incrementMoveCount();
+//        System.out.println(model);
+//        model.move(0, BishopDirection.DOWN2_RIGHT2);
+//        System.out.println(model);
+//        model.incrementMoveCount();
+//        System.out.println(model.getMoveCount());
+//    }
 
 }

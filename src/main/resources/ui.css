@@ -1,5 +1,6 @@
 .square {
     -fx-border-style: solid;
+    -fx-background-color: cornflowerblue;
 }
 
 .selected {
@@ -11,5 +12,5 @@
 }
 
 .square:hover {
-    -fx-background-color: ghostwhite;
+    -fx-background-color: rgba(51,219,222,87);
 }
