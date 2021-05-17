@@ -1,5 +1,6 @@
 package boardgame.model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -8,37 +9,49 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PositionTest {
 
-
+    Position testPosition;
+    @BeforeEach
+    void init(){
+        testPosition = new Position(0,0);
+    }
 
     @Test
     void moveTo() {
-        Position testPosition1 = new Position(0,0);
-        assertEquals(new Position(-1,-1),testPosition1.moveTo(BishopDirection.UP_LEFT));
+        assertEquals(new Position(-1,-1),testPosition.moveTo(BishopDirection.UP_LEFT));
 
-        Position testPosition2 = new Position(2,2);
-        assertEquals(new Position(1,-1),testPosition2.moveTo(BishopDirection.DOWN_LEFT));
+        assertEquals(new Position(-1,1),testPosition.moveTo(BishopDirection.UP_RIGHT));
 
-        Position testPosition3 = new Position(1,0);
-        assertEquals(new Position(1,-1),testPosition3.moveTo(BishopDirection.DOWN_LEFT));
+        assertEquals(new Position(1,-1),testPosition.moveTo(BishopDirection.DOWN_LEFT));
 
-        Position testPosition4 = new Position(0,1);
-        assertEquals(new Position(1,-1),testPosition4.moveTo(BishopDirection.DOWN_LEFT));
+        assertEquals(new Position(1,1),testPosition.moveTo(BishopDirection.DOWN_RIGHT));
 
-        Position testPosition5 = new Position(0,0);
-        assertEquals(new Position(1,-1),testPosition5.moveTo(BishopDirection.UP3_LEFT3));
+        assertEquals(new Position(-2,-2),testPosition.moveTo(BishopDirection.UP2_LEFT2));
 
-        Position testPosition6 = new Position(2,0);
-        assertEquals(new Position(5,3),testPosition6.moveTo(BishopDirection.DOWN3_RIGHT3));
+        assertEquals(new Position(-2,2),testPosition.moveTo(BishopDirection.UP2_RIGHT2));
 
+        assertEquals(new Position(2,-2),testPosition.moveTo(BishopDirection.DOWN2_LEFT2));
 
+        assertEquals(new Position(2,2),testPosition.moveTo(BishopDirection.DOWN2_RIGHT2));
 
+        assertEquals(new Position(-3,-3),testPosition.moveTo(BishopDirection.UP3_LEFT3));
 
+        assertEquals(new Position(-3,3),testPosition.moveTo(BishopDirection.UP3_RIGHT3));
 
+        assertEquals(new Position(3,-3),testPosition.moveTo(BishopDirection.DOWN3_LEFT3));
 
-
+        assertEquals(new Position(3,3),testPosition.moveTo(BishopDirection.DOWN3_RIGHT3));
     }
 
     @Test
     void testToString() {
+        assertEquals("(0,0)",testPosition.toString());
+
+        Position testPosition1 = new Position(2,3);
+        assertEquals("(0,1)",testPosition1.moveTo(BishopDirection.UP2_LEFT2).toString());
+
+        Position testPosition2 = new Position(1,0);
+        assertEquals("(4,3)",testPosition2.moveTo(BishopDirection.DOWN3_RIGHT3).toString());
+
+
     }
 }
