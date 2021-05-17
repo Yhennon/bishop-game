@@ -44,5 +44,9 @@ public class StatisticsController {
         return allGameCount;
     }
 
+    public void deleteStatistics() {
+        jdbi.withExtension(PlayerStatsDao.class,dao ->{dao.deleteStatistics(); return true;});
+    }
+
 
 }

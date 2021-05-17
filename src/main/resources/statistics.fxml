@@ -7,6 +7,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boardgame.GameStatisticsController">
    <children>
       <TextFlow fx:id="statisticsTextFlow" layoutX="200.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="274.0" layoutY="331.0" mnemonicParsing="false" onAction="#exitGame" text="Exit Game" />
+      <Button layoutX="365.0" layoutY="332.0" mnemonicParsing="false" onAction="#exitGame" text="Exit Game" />
+      <Button layoutX="154.0" layoutY="332.0" mnemonicParsing="false" onAction="#clearStatistics" text="Clear Statistics" />
    </children>
 </AnchorPane>

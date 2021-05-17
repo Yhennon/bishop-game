@@ -28,4 +28,7 @@ public interface PlayerStatsDao {
 
     @SqlQuery("Select count(n_game) FROM statistics_table")
     int countId();
+
+    @SqlUpdate("delete from statistics_table")
+    void deleteStatistics();
 }
