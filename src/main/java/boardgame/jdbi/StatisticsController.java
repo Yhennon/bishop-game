@@ -22,13 +22,6 @@ public class StatisticsController {
         }
     }
 
-    public static Jdbi getJdbiInstance() {
-        if (jdbi == null) {
-            new StatisticsController();
-        }
-        return jdbi;
-    }
-
     public static void insertNGame(int ngame, int nmove) {
         jdbi.withExtension(PlayerStatsDao.class, dao -> {
             dao.insertStats(ngame, nmove);
