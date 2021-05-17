@@ -31,18 +31,18 @@ public class StatisticsController {
 
     public static void insertNGame(int ngame, int nmove) {
         jdbi.withExtension(PlayerStatsDao.class, dao -> {
-            dao.insertStats(ngame,nmove);
+            dao.insertStats(ngame, nmove);
             return true;
         });
     }
 
     public static int[] getNGames() {
-        int [] nGamesScore = jdbi.withExtension(PlayerStatsDao.class, dao -> dao.showNGame());
+        int[] nGamesScore = jdbi.withExtension(PlayerStatsDao.class, dao -> dao.showNGame());
         return nGamesScore;
     }
 
     public static int[] getNMoves() {
-        int [] nMovesScore = jdbi.withExtension(PlayerStatsDao.class, dao -> dao.showNMove());
+        int[] nMovesScore = jdbi.withExtension(PlayerStatsDao.class, dao -> dao.showNMove());
         return nMovesScore;
     }
 

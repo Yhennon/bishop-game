@@ -17,14 +17,12 @@ public class BoardGameModel {
 
     public int gamesWon = 0;
 
-    //innen
-
-    private enum Player{
+    private enum Player {
         PLAYER1,
         PLAYER2;
 
-        public Player alter(){
-            return switch (this){
+        public Player alter() {
+            return switch (this) {
                 case PLAYER1 -> PLAYER2;
                 case PLAYER2 -> PLAYER1;
             };
@@ -34,7 +32,6 @@ public class BoardGameModel {
     private Player nextPlayer;
     private boolean goalState;
 
-    // Kezdeti Board state
     public BoardGameModel() {
         this(new Piece(PieceType.BLACK, new Position(0, 0)),
                 new Piece(PieceType.BLACK, new Position(0, 1)),
@@ -48,7 +45,6 @@ public class BoardGameModel {
         this.goalState = false;
     }
 
-    // Szükséges a paraméter nélküli konstruktorhoz.
     public BoardGameModel(Piece... pieces) {
         checkPieces(pieces);
         this.pieces = pieces.clone();
@@ -64,7 +60,6 @@ public class BoardGameModel {
         }
     }
 
-    // A megadott position a lehetséges n x m mátrixban van e.
     public static boolean isOnBoard(Position position) {
         return 0 <= position.row() && position.row() < BOARD_ROW_SIZE
                 && 0 <= position.col() && position.col() < BOARD_COLUMN_SIZE;
@@ -82,40 +77,28 @@ public class BoardGameModel {
         return pieces[pieceNumber].getPosition();
     }
 
-    // a positionProperty() kicsit összezavaró. ez egy "getter", egy Piece Positionjét adja vissza.
     public ObjectProperty<Position> positionProperty(int pieceNumber) {
         return pieces[pieceNumber].positionProperty();
     }
 
-    // Szabályos lépés vizsgálata
     public boolean isValidMove(int pieceNumber, BishopDirection direction) {
-        // Valid-e a Piece száma. (a pieces nevü Piece[] listában számon van tartva az összes Piece, 0-7 ig. Ha nem ezek közötti a pieceNumber,akkor valami baki van.
         if (pieceNumber < 0 || pieceNumber >= pieces.length) {
             throw new IllegalArgumentException();
         }
-
-        // Ezután, megadott piece-el lépünk a megadott irányba. Megvizsgáljuk, hogy továbbra is a boardon maradunk e.
         Position newPosition = pieces[pieceNumber].getPosition().moveTo(direction);
         if (!isOnBoard(newPosition)) {
             return false;
         }
-
-        // Ezután, az ütközést vizsgáljuk meg. Ha a piece (amivel lépnük) új pozíciója megegyezik bármelyik másik piece pozíciójával, akkor nem valid a lépés,mert az a pozíció már "blokkolva van".
         for (var piece : pieces) {
             if (piece.getPosition().equals(newPosition)) {
                 return false;
             }
         }
-
         return true;
     }
 
-    // Használjunk matematikai halmazt,mert akkor fixen nem lesz többször ugyanaz a move a lehetséges lépésekben.
     public Set<BishopDirection> getValidMoves(int pieceNumber) {
-        //kinullázzuk a validMoves halmazt
         EnumSet<BishopDirection> validMoves = EnumSet.noneOf(BishopDirection.class);
-        // Feltöltjük a validMoves halmazt a megadott piecenumber minden szabályos lépésével.
-        // Ezt letesztellni mainben,a blokklás részt!
         for (var direction : BishopDirection.values()) {
             if (isValidMove(pieceNumber, direction)) {
                 validMoves.add(direction);
@@ -124,22 +107,16 @@ public class BoardGameModel {
         return validMoves;
     }
 
-    // Adott Piece-t a piecesből elmozdítani.(Positionjét)
     public void move(int pieceNumber, BishopDirection direction) {
         pieces[pieceNumber].moveTo(direction);
-        // Ha a goalstate true,akk controllerben kezeljük le
         goalState = checkWinCondition();
         nextPlayer = nextPlayer.alter();
     }
 
-    //A player goalState-ét adja vissza. nem lenne szükséges,de mindenhol ilyen keözvetítőket használunk,ugyhgyo tartsuk magunkat hozzá
-    // csak mert nem akarok végtelen nagy metódusláncolásokat
     public boolean isGoalStateReached() {
         return goalState;
     }
 
-    //győzelmi feltétel
-    // H az összes fekete az utolso rowban van, és az összes fehér az elsőben,akkor win
     public boolean checkWinCondition() {
         for (var piece : pieces) {
             switch (piece.getType()) {
@@ -158,9 +135,6 @@ public class BoardGameModel {
         return true;
     }
 
-
-    // Az összes piece pozicioját visszaadja egy listában. a lista elemei az elemek pozicioja(n x m)
-    // a Controller selectablePositions listájának a feltöltésénél lesz hasznos, a modelben létrehozott 8 bábu poziciojanak listazasahoz
     public List<Position> getPiecePositions() {
         List<Position> positions = new ArrayList<>(pieces.length);
         for (var piece : pieces) {
@@ -169,13 +143,6 @@ public class BoardGameModel {
         return positions;
     }
 
-
-    // Position alapján megmondja,melyik Piece-ről van szó.
-
-    //A selectablePositions feltöltésénél lesz hasznos, amikor a kiválaszott elemről a positionje alapján kell megmondani,hogy melyik pieceről van szó.(pontosan, hogy a pieces lista hanyadik indexe)
-    // Emellett, a Controllerben a handleClickOnSquare-nél lesz még hasznos, paraméternek a selected változót fogja kapni,
-    // ami a SELECT_FROM fázisban kiválasztott  piece lesz.(board->boardon egy square-> squaren a piece)
-    // Az OptionalInt típus nagyon szép dolog,mert ha null referenciat adunk at, akkor nem exception lesz hanem empty Optionalt adunk át
     public OptionalInt getPieceNumber(Position position) {
         for (int i = 0; i < pieces.length; i++) {
             if (pieces[i].getPosition().equals(position)) {
@@ -185,26 +152,22 @@ public class BoardGameModel {
         return OptionalInt.empty();
     }
 
-    // Returns the moveCount
     public int getMoveCount() {
         return moveCount;
     }
 
-    // Adds one to the moveCount
-    public void incrementMoveCount(){
+    public void incrementMoveCount() {
         moveCount++;
     }
 
-    public int getGamesWon(){
+    public int getGamesWon() {
         return gamesWon;
     }
 
-    public void incrementGamesWon(){
+    public void incrementGamesWon() {
         gamesWon++;
     }
 
-    // a Model kiprinteléséhez
-    // a piece toString() metodusa a piecet pedig PIECETYPE[(POZITIONSOR,POZITIONOSZLOP)] formaban adja vissza.
     @Override
     public String toString() {
         StringJoiner joiner = new StringJoiner(",", "[", "]");
@@ -213,15 +176,4 @@ public class BoardGameModel {
         }
         return joiner.toString();
     }
-
-//    public static void main(String[] args) {
-//        BoardGameModel model = new BoardGameModel();
-//        model.incrementMoveCount();
-//        System.out.println(model);
-//        model.move(0, BishopDirection.DOWN2_RIGHT2);
-//        System.out.println(model);
-//        model.incrementMoveCount();
-//        System.out.println(model.getMoveCount());
-//    }
-
 }

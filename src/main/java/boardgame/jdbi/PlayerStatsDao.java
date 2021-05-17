@@ -14,11 +14,11 @@ public interface PlayerStatsDao {
                 n_move INTEGER NOT NULL
             )
             """
-        )
+    )
     void createTable();
 
     @SqlUpdate("INSERT INTO statistics_table VALUES (:n_game,:n_move)")
-    void insertStats(@Bind("n_game") int n_game,@Bind("n_move") int n_move);
+    void insertStats(@Bind("n_game") int n_game, @Bind("n_move") int n_move);
 
     @SqlQuery("SELECT n_game FROM statistics_table ORDER BY n_move")
     int[] showNGame();
