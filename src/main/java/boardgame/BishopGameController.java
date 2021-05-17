@@ -107,7 +107,6 @@ public class BishopGameController {
                     Logger.info("Move count: " + model.getMoveCount());
 
                     if (model.isGoalStateReached()) {
-                        model.incrementGamesWon();
                         hideSelectablePositions();
                         Logger.info("Goal state reached.");
                         StatisticsController statisticsController = new StatisticsController();
