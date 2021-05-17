@@ -23,6 +23,7 @@ public class BoardGameModel {
     /**
      * The enum representing two types of players.
      */
+    //CHECKSTYLE:OFF
     private enum Player {
         PLAYER1,
         PLAYER2;

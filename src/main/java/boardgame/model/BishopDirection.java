@@ -3,6 +3,7 @@ package boardgame.model;
 /**
  * An enum class that represents the possible directions.
  */
+//CHECKSTYLE:OFF
 public enum BishopDirection implements Direction {
 
     UP_LEFT(-1, -1),
