@@ -44,8 +44,8 @@ public enum BishopDirection implements Direction{
         throw new IllegalArgumentException();
     }
 
-    public static void main(String[] args) {
-        System.out.println(of(1, 1));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(of(1, 1));
+//    }
 
 }

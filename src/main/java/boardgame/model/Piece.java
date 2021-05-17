@@ -26,13 +26,13 @@ public class Piece {
     @Override
     public String toString(){return type.toString() + position.get().toString();}
 
-    public static void main(String[] args) {
-        Piece piece = new Piece(PieceType.BLACK, new Position(0,0 ));
-        piece.positionProperty().addListener((observableValue, oldPosition, newPosition) -> {
-            System.out.printf("%s -> %s\n", oldPosition.toString(), newPosition.toString());
-        });
-        System.out.println(piece);
-        piece.moveTo(BishopDirection.DOWN_RIGHT);
-        System.out.println(piece);
-    }
+//    public static void main(String[] args) {
+//        Piece piece = new Piece(PieceType.BLACK, new Position(0,0 ));
+//        piece.positionProperty().addListener((observableValue, oldPosition, newPosition) -> {
+//            System.out.printf("%s -> %s\n", oldPosition.toString(), newPosition.toString());
+//        });
+//        System.out.println(piece);
+//        piece.moveTo(BishopDirection.DOWN_RIGHT);
+//        System.out.println(piece);
+//    }
 }
