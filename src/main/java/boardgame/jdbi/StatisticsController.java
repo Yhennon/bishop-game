@@ -18,7 +18,7 @@ public class StatisticsController {
                 return true;
             });
         } catch (Exception e) {
-            Logger.info("Table already exists.");
+            Logger.debug("Table already exists.");
         }
     }
 
