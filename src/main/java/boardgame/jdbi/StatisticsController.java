@@ -5,6 +5,9 @@ import org.jdbi.v3.core.h2.H2DatabasePlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.tinylog.Logger;
 
+/**
+ * This class provides functions to use in the game's controller.
+ */
 public class StatisticsController {
     private static Jdbi jdbi;
 
