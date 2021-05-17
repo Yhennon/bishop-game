@@ -76,12 +76,14 @@ public class BishopGameController {
 
     @FXML
     private void handleMouseClick(MouseEvent mouseEvent) {
-        var square = (StackPane) mouseEvent.getSource();
-        var row = GridPane.getRowIndex(square);
-        var col = GridPane.getColumnIndex(square);
-        var position = new Position(row, col);
-        Logger.info("Click on square {}", position);
-        handleClickOnSquare(position);
+        if (!model.isGoalStateReached()) {
+            var square = (StackPane) mouseEvent.getSource();
+            var row = GridPane.getRowIndex(square);
+            var col = GridPane.getColumnIndex(square);
+            var position = new Position(row, col);
+            Logger.info("Click on square {}", position);
+            handleClickOnSquare(position);
+        }
     }
 
     private void handleClickOnSquare(Position position) {
@@ -106,6 +108,7 @@ public class BishopGameController {
 
                     if (model.isGoalStateReached()) {
                         model.incrementGamesWon();
+                        hideSelectablePositions();
                         Logger.info("Goal state reached.");
                         StatisticsController statisticsController = new StatisticsController();
                         statisticsController.insertNGame(statisticsController.getAllGameCount() + 1, model.getMoveCount());
