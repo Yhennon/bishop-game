@@ -101,13 +101,11 @@ public class BishopGameController {
                     alterSelectionPhase();
 
                     model.incrementMoveCount();
-                    System.out.println(model.getMoveCount());
+                    Logger.info("Move count: " + model.getMoveCount());
 
                     if (model.isGoalStateReached()) {
                         model.incrementGamesWon();
-                        System.out.println("GoalState reached.");
-                        System.out.println("Games won #times:");
-                        System.out.println(model.getGamesWon());
+                        Logger.info("Goal state reached.");
                         StatisticsController statisticsController = new StatisticsController();
                         statisticsController.insertNGame(statisticsController.getAllGameCount() + 1, model.getMoveCount());
 
@@ -172,7 +170,6 @@ public class BishopGameController {
     }
 
     private void createPieces() {
-        System.out.println(model.getPieceCount());
         for (int i = 0; i < model.getPieceCount(); i++) {
             model.positionProperty(i).addListener(this::piecePositionChange);
             var piece = createPiece(Color.valueOf(model.getPieceType(i).name()));
